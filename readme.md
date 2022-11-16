@@ -65,3 +65,10 @@ Database drivers: mysql, postgres, postgresql, stub
 
 ## Migration Down
 - File migration untuk mengeksekusi kode program di file .down
+
+## Membuat Database Baru
+- Golang Migrate tidak dapat membuat database, sehingga perlu dibuat terlebih dahulu
+
+## Menjalankan Database Migration
+`migrate -database 'koneksidatabase' -path <folder_up>`
+**Contoh**: `migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations up`

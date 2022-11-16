@@ -72,3 +72,24 @@ Database drivers: mysql, postgres, postgresql, stub
 ## Menjalankan Database Migration
 `migrate -database 'koneksidatabase' -path <folder_up>`
 **Contoh**: `migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations up`
+
+## Migration State
+- Golang Migrate akan menjalankan migration terakhir saja
+- Informasi state migration disimpan pada table schema_migrations
+
+## Rollback Migration
+- Kembali ke perubahan database sebelumnya
+`migrate -database 'koneksidatabase' -path <folder_down>`
+**Contoh**: `migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations down`
+- row terakhir pada tabel schema_migration akan dihapus
+
+## Migration ke versi tertentu
+- migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations up `<number>`
+- migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations down `<number>`
+
+## Dirty State
+- State saat gagal migration karena terdapat error perintah SQL
+- Solusi (step-by-step):
+  1. Drop semua perubahan pada file migration yang error
+  2. Perbaiki sql yang error
+  3. pindah versi migration ke sebelum error `migrate -database 'mysql://root:rahasiabangets@tcp(localhost:3306)/learn_go_database_migration' -path db/migrations force nomorversi`
